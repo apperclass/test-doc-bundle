@@ -12,11 +12,11 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Class FinishListener
+ * Class TestDocListener
  *
  * @package Apperclass\TestDocBundle\Listener
  */
-class FinishListener
+class TestDocListener
 {
 
     protected $entityManager;

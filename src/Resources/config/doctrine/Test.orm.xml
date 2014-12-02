@@ -9,19 +9,17 @@
             table="_tests"
             repository-class="Apperclass\TestDocBundle\Repository\TestRepository">
 
-
-
         <id name="id" type="integer">
             <generator strategy="AUTO" />
         </id>
 
         <field name="url" type="text" />
-        <field name="responseHeader" type="text"  />
-        <field name="responseBody" type="text"  />
-        <field name="requestHeader" type="text"  />
-        <field name="requestBody" type="text"  />
-        <field name="statusCode" type="integer"  />
-        <field name="method" type="string"  />
+        <field name="responseHeader" type="text" />
+        <field name="responseBody" type="text" />
+        <field name="requestHeader" type="text" />
+        <field name="requestBody" type="text" />
+        <field name="statusCode" type="integer" />
+        <field name="method" type="string" />
 
     </entity>
 

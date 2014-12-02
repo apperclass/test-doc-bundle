@@ -1,159 +1,35 @@
 <!DOCTYPE>
 <html>
     <head>
-        <title>APPERCLASS TEST DOC</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <style>
-            pre { padding: 10px; margin: 5px; }
-            .string { color: green; }
-            .number { color: darkorange; }
-            .boolean { color: blue; }
-            .null { color: magenta; }
-            .key { color: red; }
-            .panel-body { display: none; }
-            pre { border: 0px solid #FFF; background-color: #FFF; max-height: 500px;}
-            .panel-heading { cursor: pointer; }
-            .status-code { float: right; }
-            .request-method { display: inline-block; width: 100px; }
-        </style>
+        <title>Apperclass Test Doc</title>
+
+        <script type="text/javascript" src="{{ asset('bundles/apperclasstestdoc/vendor/jquery/jquery-2.1.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/apperclasstestdoc/vendor/bootstrap/js/bootstrap-3.1.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/apperclasstestdoc/js/main.js') }}"></script>
+
+        <link rel="stylesheet" href="{{ asset('bundles/apperclasstestdoc/vendor/bootstrap/css/bootstrap-3.1.1.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/apperclasstestdoc/css/main.css') }}" />
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <nav class="navbar navbar-inverse" role="navigation">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="#">Apperclass Test Doc</a>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </nav>
-
-            </div>
-
-
+            {% include 'ApperclassTestDocBundle:Default:blocks/header.html.twig' %}
             <div class="row">
                 <div class="col-md-12">
-
-                    {% set currentSection = '' %}
-                    {% set currentSubsection = '' %}
-
                     {% for test in tests %}
-                        {% set urlComponents = test.url|split('?') %}
-                        {% set section = urlComponents[0]|split('/') %}
-
-                        {% if section[1] != currentSection %}
-                            {% set currentSection = section[1] %}
-                            <h1>{{ currentSection }}</h1>
-                        {% endif %}
-
-                        {% if section[2] != currentSubsection %}
-                            {% set currentSubsection = section[2] %}
-                            <div style="height: 10px;"></div>
-                            <h5>{{ currentSubsection }}</h5>
-                        {% endif %}
-
-
-
-
-                        <div class="panel {% if test.method== 'GET' %} panel-success
-                        {% elseif test.method == 'POST' %} panel-danger
+                        <div data-url="{{ test.url }}" class="test-url-doc panel {% if test.method== 'GET' %} panel-success
+                        {% elseif test.method == 'POST' %} panel-primary
                         {% elseif test.method == 'PUT' %} panel-warning
+                        {% elseif test.method == 'PATCH' %} panel-warning
+                        {% elseif test.method == 'DELETE' %} panel-danger
                         {% else %} panel-info
                         {% endif %}
                         ">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><span class="request-method">{{ test.method }}</span> {{ test.url }} <span class="status-code">{{ test.statusCode }}</span></h3>
-                            </div>
-                            <div class="panel-body">
-
-
-
-                                <div role="tabpanel">
-
-
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="active" role="presentation"><a href="#response-body{{ test.id }}" role="tab" data-toggle="tab">Response Body</a></li>
-                                        <li role="presentation"><a href="#response-header{{ test.id }}" role="tab" data-toggle="tab">Response Header</a></li>
-                                        <li role="presentation"><a href="#request-body{{ test.id }}" role="tab" data-toggle="tab">Request Body</a></li>
-                                        <li role="presentation"><a href="#request-header{{ test.id }}" role="tab" data-toggle="tab">Request Header</a></li>
-
-                                    </ul>
-
-
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="active tab-pane" id="response-body{{ test.id }}">
-                                            <pre class="json">{{ test.responseBody }}</pre>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="response-header{{ test.id }}">
-                                            <pre class="json">{{ test.responseHeader }}</pre>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="request-body{{ test.id }}">
-                                            <pre class="json">{{ test.requestBody }}</pre>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="request-header{{ test.id }}">
-                                            <pre class="json">{{ test.requestHeader }}</pre>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-
-
-
-                            </div>
+                            {% include 'ApperclassTestDocBundle:Default:blocks/panel-heading.html.twig' %}
+                            {% include 'ApperclassTestDocBundle:Default:blocks/panel-body.html.twig' %}
                         </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
-
-
-        <script>
-            function syntaxHighlight(json) {
-                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-                    var cls = 'number';
-                    if (/^"/.test(match)) {
-                        if (/:$/.test(match)) {
-                            cls = 'key';
-                        } else {
-                            cls = 'string';
-                        }
-                    } else if (/true|false/.test(match)) {
-                        cls = 'boolean';
-                    } else if (/null/.test(match)) {
-                        cls = 'null';
-                    }
-                    return '<span class="' + cls + '">' + match + '</span>';
-                });
-            }
-            $(document).ready(function(){
-
-                $('.panel-heading').click(function(){
-                    $(this).parent().find('.panel-body').slideToggle();
-                });
-
-                setTimeout(function(){
-                    $('pre.json').each(function(index, element){
-                        var text = $(element).text();
-                        if (!text) {
-                            return;
-                        }
-                        try {
-                            var $jsonObject = $.parseJSON(text);
-                            console.log($jsonObject);
-                            $(element).html(syntaxHighlight(JSON.stringify($jsonObject, null, 4)));
-                        } catch (ex) {
-                            //
-                        }
-
-                    });
-                },500);
-            });
-        </script>
     </body>
 </html>

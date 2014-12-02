@@ -1,0 +1,35 @@
+<div class="panel-heading">
+    <h3 class="panel-title">
+        <div class="row">
+            <div class="col-md-1">
+                <span class="request-method">{{ test.method }}</span>
+            </div>
+            <div class="col-md-10">
+                <span class="request-url">{{ test.url }}</span>
+                </div>
+            <div class="col-md-1">
+                <span class="status-code">
+                    <div class="test-status-response-icon">
+                        {% if test.statusCode == '200' %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% elseif test.statusCode == '201' %}
+                            <span class="glyphicon glyphicon-star"></span>
+                        {% elseif test.statusCode == '204' %}
+                            <span class="glyphicon glyphicon-trash"></span>
+                        {% elseif test.statusCode == '404' %}
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        {% elseif test.statusCode == '400' %}
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                        {% elseif test.statusCode == '403' %}
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                        {% elseif test.statusCode == '401' %}
+                            <span class="glyphicon glyphicon-eye-close"></span>
+                        {% elseif test.statusCode == '500' %}
+                            <span class="glyphicon glyphicon-fire"></span>
+                        {% endif %}
+                    </div>
+                    {{ test.statusCode }}</span>
+            </div>
+        </div>
+    </h3>
+</div>

@@ -1,0 +1,24 @@
+<div class="panel-body">
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active" role="presentation"><a href="#response-body{{ test.id }}" role="tab" data-toggle="tab">Response Body</a></li>
+            <li role="presentation"><a href="#response-header{{ test.id }}" role="tab" data-toggle="tab">Response Header</a></li>
+            <li role="presentation"><a href="#request-body{{ test.id }}" role="tab" data-toggle="tab">Request Body</a></li>
+            <li role="presentation"><a href="#request-header{{ test.id }}" role="tab" data-toggle="tab">Request Header</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="active tab-pane" id="response-body{{ test.id }}">
+                <pre class="json">{{ test.responseBody }}</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="response-header{{ test.id }}">
+                <pre class="json">{{ test.responseHeader }}</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="request-body{{ test.id }}">
+                <pre class="json">{{ test.requestBody }}</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="request-header{{ test.id }}">
+                <pre class="json">{{ test.requestHeader }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
