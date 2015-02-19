@@ -30,6 +30,8 @@ class Test
     protected $method;
     /** @var integer */
     protected $statusCode;
+    /** @var string */
+    protected $profile;
 
     /**
      * @param int $id
@@ -157,6 +159,22 @@ class Test
     public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param string $profile
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
     }
 
 

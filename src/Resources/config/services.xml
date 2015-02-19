@@ -13,6 +13,7 @@
         <service id="apperclass.test_doc.test_doc_listener" class="Apperclass\TestDocBundle\Listener\TestDocListener">
             <argument type="service" id="apperclass.test_doc.entity_manager" />
             <argument>%kernel.environment%</argument>
+            <argument type="service" id="profiler" />
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-250" />
         </service>
 

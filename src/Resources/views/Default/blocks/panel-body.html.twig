@@ -5,6 +5,7 @@
             <li role="presentation"><a href="#response-header{{ test.id }}" role="tab" data-toggle="tab">Response Header</a></li>
             <li role="presentation"><a href="#request-body{{ test.id }}" role="tab" data-toggle="tab">Request Body</a></li>
             <li role="presentation"><a href="#request-header{{ test.id }}" role="tab" data-toggle="tab">Request Header</a></li>
+            <li role="presentation"><a href="#profile{{ test.id }}" role="tab" data-toggle="tab">Profile</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="active tab-pane" id="response-body{{ test.id }}">
@@ -18,6 +19,9 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="request-header{{ test.id }}">
                 <pre class="json">{{ test.requestHeader }}</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile{{ test.id }}">
+                <pre class="json">{{ test.profile }}</pre>
             </div>
         </div>
     </div>

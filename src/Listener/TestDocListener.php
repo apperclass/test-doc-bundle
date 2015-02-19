@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
 
 /**
  * Class TestDocListener
@@ -21,15 +22,18 @@ class TestDocListener
 
     protected $entityManager;
     protected $environment;
+    protected $profiler;
 
     /**
      * @param EntityManager $entityManager
      * @param string        $environment
+     * @param Profiler      $profiler
      */
-    public function __construct(EntityManager $entityManager, $environment)
+    public function __construct(EntityManager $entityManager, $environment, $profiler)
     {
         $this->entityManager = $entityManager;
         $this->environment = $environment;
+        $this->profiler = $profiler;
     }
 
     /**
@@ -47,6 +51,7 @@ class TestDocListener
 
         $request = $event->getRequest();
         $response = $event->getResponse();
+
         $test = new Test();
         $test->setRequestBody($request->getContent());
         $test->setMethod($request->getMethod());
@@ -55,6 +60,13 @@ class TestDocListener
         $test->setResponseBody($response->getContent());
         $test->setStatusCode($response->getStatusCode());
         $test->setResponseHeader(json_encode($response->headers->all()));
+        $profile = array(
+            'queryCount' => $this->profiler->get('db')->getQueryCount(),
+            'queryTime' => $this->profiler->get('db')->getTime(),
+            'memory' => $this->profiler->get('memory')->getMemory()
+        );
+        $test->setProfile(json_encode($profile));
+
         $testRepository = $this->entityManager->getRepository(Test::SHORTCUT_CLASS_NAME);
         $oldTest = $testRepository->findOneBy(array('url'=> $test->getUrl()));
         if ($oldTest) {
